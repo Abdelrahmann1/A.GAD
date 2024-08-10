@@ -612,14 +612,21 @@ margin-top: 3rem;
       margin-bottom: .9rem;
     }
   }
+  .fromto{
+    color: black !important;
+  }
+  .n290{
+    font-size: 30px !important;
+    color: black !important;
+  }
   .h3{
-    /* color: #606060; */
-    /* font-weight: 800; */
-    font-family: 'Zain', sans-serif;
+    font-weight: 800;
+  color: #606060;
 
-    letter-spacing: 0.5px;
     margin-bottom: 0.5rem;
     text-shadow: 0 1px 2px #0003;
+    letter-spacing: -1.5px;
+    font-size: 27px !important;
   }
   .carouselaya{
     display: flex;

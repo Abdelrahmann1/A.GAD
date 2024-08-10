@@ -46,26 +46,37 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     const phoneNumber = document.getElementById("phone").value.trim();
-    const phoneNumber2 = document.getElementById("phone2").value.trim();
-
+    
     // Regex pattern for 10-digit phone number
     const pattern = /^01\d{9}$/;
-
+    
     // Validate phone number and update message
     const isValid = pattern.test(phoneNumber);
-    const isValid2 = pattern.test(phoneNumber2);
     // Return validation status
     if (!isValid) {
       alert("برجاء ادخال الرقم بشكل صحيح");
       return;
     }
-    if (!isValid2) {
-      alert("برجاء ادخال الرقم الثاني بشكل صحيح");
-      return;
+    if (document.getElementById("phone2").value) {
+      const phoneNumber2 = document.getElementById("phone2").value.trim();
+      const isValid2 = pattern.test(phoneNumber2);
+      if (!isValid2) {
+        alert("برجاء ادخال الرقم الثاني بشكل صحيح");
+        return;
+      }
     }
-    // console.log('Quantity:', quantityInput.value);
-    // console.log('Color:', colorInput.value);
+    const now = new Date();
 
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const year = now.getFullYear();
+    
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    
     const formData = new FormData(form);
     let data = {};
     formData.forEach((value, key) => {
@@ -73,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     });
     data["productColor"] = colorInput.value;
+    data["Date"] = formattedDate;
     get_to_dash_order(data);
   });
 });

@@ -17,6 +17,10 @@ function displayUnitCards(params) {
 
     cardBanner.innerHTML = `
     <tr>
+     </td>
+    <td><button type="button" class="btn btn-danger" onclick="Delete('${doc.id}')">حذف العنصر</button>
+    </td>
+    <td><div class="clamp-text"> ${propertyData.Date}</div></td>
     <td><div class="clamp-text"> ${propertyData.productQuantity}</div></td>
     <td><div class="clamp-text"> ${propertyData.productColor}</div></td>
     <td><div class="clamp-text"> ${propertyData.alternatePhone}</div></td>
@@ -37,4 +41,35 @@ function displayUnitCards(params) {
 
 
 
+function Delete(params) {
+  const confirmed = confirm("هل انت متأكد من أنك تريد مسح هذا العنصر");
+
+  if (!confirmed) {
+    console.log("تم الغاء الحذف");
+    return;
+  }
+
+  const documentIdToDelete = params;
+  const docRefToDelete = db.collection("orders").doc(documentIdToDelete);
+  docRefToDelete.get()
+    .then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        const productData = docSnapshot.data();
+        return docRefToDelete.delete().then(() => productData);
+      } else {
+        console.log("Document does not exist");
+        window.location.reload();
+        return null;
+      }
+    })
+    .then((productData) => {
+      if (productData) {
+        window.location.reload();
+
+      }
+    })
+    .catch((error) => {
+      alert("Error deleting document:", error);
+    });
+}
   
