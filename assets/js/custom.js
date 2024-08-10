@@ -145,3 +145,11 @@ function moveRowToBottom() {
 }
 window.addEventListener("resize", moveRowToBottom);
 moveRowToBottom();
+
+document.querySelectorAll('.carousel-img').forEach(function(element) {
+  element.addEventListener('click', function(event) {
+      event.preventDefault();
+      var newSrc = this.querySelector('img').getAttribute('src');
+      document.getElementById('product-detail-img').setAttribute('src', newSrc);
+  });
+});
