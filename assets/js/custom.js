@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
       data[key] = value;
       // console.log(key, value);
     });
+    data[6] = colorInput.value;
     get_to_dash_order(data);
   });
 });
@@ -128,7 +129,7 @@ const row = document.getElementById("move-this-row");
 const container2 = document.getElementById("feed-backmobile-here");
 const container = row.parentElement;
 function moveRowToBottom() {
-  if (window.innerWidth <= 768) {
+  if (window.innerWidth <= 991) {
     // Check if the screen width is 768px or less
     if (row.parentElement && row.parentElement !== container2) {
       container.removeChild(row); // Remove the row from its current position
@@ -142,32 +143,5 @@ function moveRowToBottom() {
     }
   }
 }
-
-// Run the function on initial load
 window.addEventListener("resize", moveRowToBottom);
 moveRowToBottom();
-
-// Run the function whenever the window is resized
-const color = document.getElementById("move-this-below-img");
-const voont = document.getElementById("target-container");
-const color_cont = color.parentElement;
-function moveRowToBottom2() {
-  if (window.innerWidth <= 768) {
-    // Check if the screen width is 768px or less
-    if (color.parentElement && color.parentElement !== voont) {
-        color_cont.removeChild(color); // Remove the row from its current position
-      voont.appendChild(color);
-    }
-  } else {
-    // Check if the screen width is 768px or less
-    if (row.parentElement && row.parentElement !== color_cont) {
-        color_cont.insertBefore(color, color_cont.firstChild);
-        // color_cont.appendChild(color);
-      voont.removeChild(color); // Remove the row from its current position
-    }
-  }
-}
-
-// Run the function on initial load
-window.addEventListener("resize", moveRowToBottom2);
-moveRowToBottom2();
