@@ -64,8 +64,8 @@ function Delete(params) {
     })
     .then((productData) => {
       if (productData) {
+        alert("تم الحذف بنجاح")
         window.location.reload();
-
       }
     })
     .catch((error) => {
