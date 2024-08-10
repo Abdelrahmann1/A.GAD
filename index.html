@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Zay Shop - Product Detail Page</title>
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <meta charset="utf-8">
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+    <script src="assets/js/firebase.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="./assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="./assets/img/favicon.png">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/templatemo.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zain:wght@200;300;400;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="assets/css/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/slick-theme.css">
+
+
+
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans&display=swap"rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap"rel="stylesheet">
+    <!-- Style Flipdown -->
+    <link href="https://pbutcher.uk/flipdown/css/flipdown/flipdown.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container-fluid headcontainer d-flex  align-items-center">
+
+            <img src="./assets/img/logo.png" alt="Logo photo"
+                class="navbar-brand text-success logo h1 align-self-center logo-header-img">
+            <img src="./assets/img/apple-icon.png" alt="Logo photo"
+                class="navbar-brand text-success logo h1 align-self-center text-header-img">
+
+            <div class="align-self-center  flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                </div>
+                <div class="navbar align-self-center d-flex justify-content-center">
+                    <p class="text-title">مؤسسة أحمد جاد لتجارة الأدوات الصحية</p>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->
+
+
+    <!-- Modal -->
+    <div class="modal fade " id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loadingModalLabel">يتم أرسال الطلب</h5>
+                </div>
+                <div class="modal-body">
+                    <p>........ برجاء ألانتظار بينما يتم ارسال بياناتك </p>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loadedModal" tabindex="-1" aria-labelledby="loadedModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="page-body">
+                    <div class="head">
+                        <h3 style="margin-top:5px;">تم أرسال طلبك بنجاح</h3>
+                    </div>
+
+                    <h1 style="text-align:center;">
+                        <div class="checkmark-circle">
+                            <div class="background"></div>
+                            <div class="checkmark draw"></div>
+                        </div>
+                        <h1>
+                            <div class="butn-clo mt-4">
+                                <button class="btn btn-success" onclick="window.location.reload();">أغلاق</button>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="errorloadedModal" tabindex="-1" aria-labelledby="errorloadedModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="page-body">
+                    <div class="head">
+                        <h3 style="margin-top:5px;">لم تم أرسال طلبك برجاء المحاوله مجددا</h3>
+                    </div>
+
+                    <div class="butn-clo mt-4">
+                        <button class="btn btn-success" onclick="window.location.reload();">أغلاق</button>
+                    </div>
+
+                </div>
+                <h1>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Open Content -->
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row ">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img class="card-img img-fluid" src="assets/img/white/1.jpeg" alt="Card image cap"
+                            id="product-detail-img">
+                    </div>
+                    <div class="row"id="target-container">
+                        <div class="col-1 align-self-center">
+                            <a href="#multi-item-example" role="button" data-bs-slide="prev">
+                                <i class="text-dark fas fa-chevron-left"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </div>
+                        <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item"
+                            data-bs-ride="carousel">
+                            <div class="carousel-inner product-links-wap" role="listbox">
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/2.jpeg"
+                                                    alt="Product Image 1">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/3.jpeg"
+                                                    alt="Product Image 2">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/4.jpeg"
+                                                    alt="Product Image 3">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/5.jpeg"
+                                                    alt="Product Image 4">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/6.jpeg"
+                                                    alt="Product Image 5">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/7.jpeg"
+                                                    alt="Product Image 6">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/8.jpeg"
+                                                    alt="Product Image 7">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/9.jpeg"
+                                                    alt="Product Image 8">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/10.jpeg"
+                                                    alt="Product Image 9">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item dis-in">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/11.jpeg"
+                                                    alt="Product Image 10">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" src="assets/img/white/12.jpeg"
+                                                    alt="Product Image 11">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1 align-self-center">
+                            <a href="#multi-item-example" role="button" data-bs-slide="next">
+                                <i class="text-dark fas fa-chevron-right"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row " id="move-this-row">
+                        <div class="feed-text">
+                            <p>أراء العملاء</p>
+                        </div>
+
+                        <div class="col-1 align-self-center">
+                            <a href="#multi-item-example1" role="button" data-bs-slide="prev">
+                                <i class="text-dark fas fa-chevron-left"></i>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </div>
+                        <div id="multi-item-example1" class="col-10 carousel slide carousel-multi-item"
+                            data-bs-ride="carousel">
+                            <div class="carousel-inner product-links-wap" role="listbox">
+                                <div class=" carousel-item  active">
+                                    <div class="carouselaya">
+                                        <div class="container commentaya">
+                                            <div class="comal"></div>
+                                            <p class="comntaya-text">
+                                                سماعة الدش جميله جدآ و خامتها کویسه جدا و فعلا بتخلي المياه اقوي و جاتلي زاي الصورة بظبط بجد شكراً جداً 
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item  ">
+                                    <div class="carouselaya">
+                                        <div class="container commentaya">
+                                            <p class="comntaya-text">
+                                                بجد احلي و اقوي دش ركبته في بيتي و بيخلي المياه قويه و الفلتر الي معاه مطلع المياه نضيفه من غير رمله بعد ما كنت بعاني من نزول الرمله مع المياه شكرا جدا و ان شاء الله مش اخر تعامل                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item  ">
+                                    <div class="carouselaya">
+                                        <div class="container commentaya">
+                                            <p class="comntaya-text">
+                                                اول مرا اشتري منتج اونلاين ييجي نفس الشكل و نفس الوصف و احلي من الوصف كمان والله والشحن كان سريع و السماعه متغلفه كويس و خامتها حلوه جدا و ان شاء الله مش اخر تعامل                                            
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item  ">
+                                    <div class="carouselaya">
+                                        <div class="container commentaya">
+                                            <p class="comntaya-text">
+                                                الحاجه وصلت و الشحن متأخرش زي ما بعتولي الاسعار والصور زاي الي وصلتني و كواليتي السماعه اكثر من ممتاذه تسلمو كلكم زوق و فعلا قيمه مقابل سعر                  
+                                                                      </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1 align-self-center">
+                            <a href="#multi-item-example1" role="button" data-bs-slide="next">
+                                <i class="text-dark fas fa-chevron-right"></i>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="col-lg-7 margin-in-pc" id="feed-backmobile-here">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <!-- Scripts -->
+                            <h1 class="h2">دش الحمام - 5 أوضاع مختلفة
+                            </h1>
+                            <div class="textaya">
+
+                            </div>
+                            <p class="h3 py-2 text-left">
+                                ٢٩٠ ج.م
+                                بدلا من
+                                <span class="fromto"> ٤٩٠ ج.م</span>
+                            </p>
+                            <div class="hero connect-page">
+                                <div class="container">
+                                  <div class="hero-body">
+                                    <div class="campaign campaign-0">
+                                      <div class="counter timer">
+                                        <span class="title">الوقت المتبقي حتي انتهاء العرض</span>
+                                        <div class="counter-boxes">
+                                          <div class="count-box">
+                                            <h1 class="value hour">0</h1>
+                                            <span>Hours</span>
+                                          </div>
+                                          <div class="count-box">
+                                            <h1 class="value minute">0</h1>
+                                            <span>Minutes</span>
+                                          </div>
+                                          <div class="count-box">
+                                            <h1 class="value second">0</h1>
+                                            <span>Seconds</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            <p class="py-2">
+                                <span class="ilist-inline-item text-dark">التقييم 4.8 </span>
+                                <i class="fa fa-star text-secondary"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                                <i class="fa fa-star text-warning"></i>
+                            </p>
+                            <h6> : الوصف</h6>
+                            <p>المياة بقت ضعيفة معظم الوقت
+                                و الدش بيبقى بطئ ومش عارف تاخد شاور
+                                جبنالك الحل دا مع دش 5في1
+                                وا بــ5 اوضاع لضخ المياه
+                            </p>
+                            <h6> : المميزات</h6>
+
+                            <ul class="uli">
+                                <li>5 أوضاع مختلفة لخروج المياه - ضغط مياه عالي</li>
+                                <li> إجمد دش للحمام ب 5 أوضاع مختلفة لخروج المايه عشان يطلعلك المايه زي ما انت عاوز
+                                    وبضغط المايه اللي انت محتاجه </li>
+                                <li> ضغط الدش عالي وهيحسسك بالراحة في جسمك وهيخليك عاوز تستحمي كل شوية </li>
+                                <li> شكله شيك جدا وهيناسب ديكورات الحمام المختلفة يعني ضغط مايه عالي وشياكة في نفس الوقت
+                                </li>
+                                <li>دش الحمام مزود ب 5 أوضاع مختلفة عشان تتحكم في خروج المايه زي ما انت عاوز وبالضغط
+                                    اللي انت عاوزه </li>
+                                <li> كله عن طريق ضغطة واحدة هتقدر تتحكم في فتح وغلق الدش بكل بساطة وسهولة </li>
+                                <li> ضغط المايه بتاعه عالي وهيحسسك بالراحة في جسمك وهيديك إحساس رهيب بالإنتعاش </li>
+                                <li> طريقة تحكم بسيطة في أوضاع المياه المختلفة عشان تختار ضغط المايه المناسب ليك </li>
+                                <li> شكله شيك جدا وهيناسب ديكورات الحمام المختلفة يعني ضغط مايه عالي وشياكة في نفس الوقت
+                                </li>
+                                <li> مصنوع من خامات متينة وعالية الجودة وهيعيش معاك فترة طويلة جدا </li>
+                            </ul>
+                            <form class="" id="orderForm" name="myForm" method="GET">
+                                <div class="row justify-content-end" id="move-this-below-img">
+                                    <!-- <div class="col-auto q-q">
+                                        <ul class="list-inline  ul">
+                                            <li class="list-inline-item"><span class="btn pmbtn btn-success"
+                                                    id="btn-minus">-</span></li>
+                                            <li class="ilist-inline-item"><span class="badge bg-secondary"
+                                                    id="var-value">1</span></li>
+                                            <li class="list-inline-item"><span class="btn pmbtn btn-success"
+                                                    id="btn-plus">+</span></li>
+                                            <li class="ilist-inline-item text-right ">
+                                                <h6>
+                                                    ألكميه
+                                                </h6>
+
+                                                <input type="hidden" name="productQuantity" id="productQuantity"
+                                                    value="1">
+                                            </li>
+                                        </ul>
+                                    </div> -->
+                                    <!-- <br> -->
+                                    <div class="col-auto">
+                                        <ul class="list-inline ul">
+                                            <li class="list-inline-item btn-secondary "><span
+                                                    class="btn btn-size btn-white  selected  " data-color="أبيض"></span>
+                                            </li>
+                                            <li class="list-inline-item "><span class=" btn  btn-size btn-black"
+                                                    data-color="أسود"></span></li>
+                                            <li class="ilist-inline-item">
+                                                <h6>
+                                                    أختر لون :
+                                                </h6>
+                                                <input type="hidden" name="productColor" id="productColor" value="أبيض">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="container-fluid -5">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="mb-12">
+                                                <h4 class="font-weight-semi-bold mb-4 h4">أطلب الان</h4>
+                                                <div class="row justify-content-end">
+                                                    <div class="col-md-6 form-group ">
+                                                        <label>رقم التليفون</label>
+                                                        <input class="form-control" type="number" name="phone"
+                                                            id="phone" required placeholder="+20123456789">
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <label>الاسم بالكامل</label>
+                                                        <input class="form-control" type="text" name="fullName" required
+                                                            placeholder="محمد أحمد حسنين">
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <label>العنوان بالتفاصيل </label>
+                                                        <input class="form-control" type="text" name="address" required
+                                                            placeholder="ش الماظه - مدينه نصر">
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <label>و رقم تلفون اخر ( اختياري )</label>
+                                                        <input class="form-control" type="number" id="phone2"
+                                                            name="alternatePhone" placeholder="+20123456789">
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <label>المحافظه</label>
+                                                        <input class="form-control" type="text" name="province" required
+                                                            placeholder="ألقاهره">
+                                                    </div>
+                                                    <div class="col-md-6 form-group">
+                                                        <label>الكميه</label>
+                                                        <input class="form-control" type="number" name="productQuantity" required
+                                                            placeholder="1, 2, 3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col d-grid">
+                                    <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">أشترى
+                                        الان</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- col end -->
+
+            </div>
+        </div>
+    </section>
+    <!-- Close Content -->
+
+    <!-- Start Article -->
+
+    <!-- End Article -->
+
+
+    <!-- Start Footer -->
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row text-light ">
+                <div class="col-12">
+                    <div class="w-100 my-3 border-top border-dark"></div>
+                </div>
+                <div class="col-auto me-auto foot-col">
+                    <ul class="list-inline text-lefta footer-icons">
+                            <li class="ilist-inline-item border border-light rounded-circle text-center">
+                                <a class="text-light text-decoration-none" target="_blank" rel="noopener noreferrer" 
+                                href="https://www.facebook.com/profile.php?id=100054603452549&mibextid=LQQJ4d "><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                            </li>
+                        <li class="ilist-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://www.instagram.com/"><i class="fab fa-tiktok fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="ilist-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank"
+                                href="https://wa.me/+201156943496?text=urlencodedtext"><i class="fab fa-whatsapp fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="ilist-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" href="tel:01156943496"><i class="fa-solid fa-phone-volume"></i></a>
+                        </li>
+                        <div class="ilist-inline-item text-center">
+                            <a class="text-light phonenumber-footer text-decoration-none">+201156943496</a>
+                        </div>
+                    </ul>
+                    <!-- <i class="fa-solid fa-phone-volume"></i> -->
+                </div>
+                <div class="col-auto footer-title-r">
+                    <div class="row footer-title-r">
+                        <p class="text-title">مؤسسه احمد جاد لتجارة الادوات الصحيه</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </footer>
+    <!-- End Footer -->
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+    <script src="https://pbutcher.uk/flipdown/js/flipdown/flipdown.js"></script>
+
+    <!-- Start Slider Script -->
+    <script src="assets/js/slick.min.js"></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 3
+                }
+            }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->
+
+</body>
+
+</html>
