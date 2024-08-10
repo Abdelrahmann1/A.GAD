@@ -27,10 +27,7 @@ function get_to_dash_order(data) {
         backdrop: 'static'
     });
         loadingModal.show();
-        var postData = {
-            "Color": colorInput
-          };
-    db.collection('orders').add(data, postData)
+    db.collection('orders').add(data)
     .then(() => {
         loadingModal.hide();
         loadedModal.show();

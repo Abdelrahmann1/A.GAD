@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let data = {};
     formData.forEach((value, key) => {
       data[key] = value;
-      // console.log(key, value);
+    
     });
-    data[6] = colorInput.value;
+    data["productColor"] = colorInput.value;
     get_to_dash_order(data);
   });
 });
